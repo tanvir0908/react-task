@@ -1,9 +1,10 @@
+// import { useState } from "react";
+
 import { useState } from "react";
 
 const Problem1 = () => {
   const [show, setShow] = useState("all");
-
-  let data = [];
+  const [data, setData] = useState([]);
 
   const handleClick = (val) => {
     setShow(val);
@@ -15,8 +16,13 @@ const Problem1 = () => {
     const form = e.target;
     const name = form.name.value;
     const status = form.status.value;
-    const newUser = { name, status };
-    data.push(newUser);
+    let count = 3;
+    if (status === "Active") {
+      count = 1;
+    } else if (status === "Completed") {
+      count = 2;
+    }
+    setData([...data, { name, status, count }]);
     form.reset();
   };
   return (
@@ -82,14 +88,42 @@ const Problem1 = () => {
             </li>
           </ul>
           <div className="tab-content"></div>
-          <table className="table table-striped ">
+          <table className="table table-striped">
             <thead>
               <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Status</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              {show === "all" &&
+                data
+                  .sort((a, b) => a.count - b.count)
+                  .map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.name}</td>
+                      <td>{item.status}</td>
+                    </tr>
+                  ))}
+              {show === "active" &&
+                data
+                  .filter((data) => data.status === "Active")
+                  .map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.name}</td>
+                      <td>{item.status}</td>
+                    </tr>
+                  ))}
+              {show === "completed" &&
+                data
+                  .filter((data) => data.status === "Completed")
+                  .map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.name}</td>
+                      <td>{item.status}</td>
+                    </tr>
+                  ))}
+            </tbody>
           </table>
         </div>
       </div>
