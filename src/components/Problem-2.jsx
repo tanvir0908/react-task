@@ -7,7 +7,7 @@ const Problem2 = () => {
   const [allContact, setAllContact] = useState([]);
   const [usContact, setUSContact] = useState([]);
 
-  const [show, setShow] = useState("");
+  const [show, setShow] = useState("all");
 
   axios
     .get("https://contact.mediusware.com/api/contacts/?format=json")
